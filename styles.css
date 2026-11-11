@@ -1,0 +1,275 @@
+:root {
+    --bg-main: #f4f6f9;
+    --bg-surface: #ffffff;
+    --text-main: #2d3748;
+    --text-muted: #718096;
+    --primary: #3182ce;
+    --primary-hover: #2b6cb0;
+    --danger: #e53e3e;
+    --danger-hover: #c53030;
+    --border: #e2e8f0;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --focus-ring: rgba(49, 130, 206, 0.6);
+}
+
+[data-theme="dark"] {
+    --bg-main: #1a202c;
+    --bg-surface: #2d3748;
+    --text-main: #f7fafc;
+    --text-muted: #a0aec0;
+    --primary: #4299e1;
+    --primary-hover: #3182ce;
+    --danger: #f56565;
+    --danger-hover: #e53e3e;
+    --border: #4a5568;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --focus-ring: rgba(66, 153, 225, 0.6);
+}
+
+/* ESTILOS GENERALES Y MOBILE-FIRST (Fase 2) */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+}
+
+/* REQUISITO DE ESTADOS: Estado FOCUS accesible para inputs, selects, textareas y botones */
+input:focus, select:focus, textarea:focus, button:focus {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+/* layout bidimensional (CSS Grid) para escritorio */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ZONA 1: sidebar movil oculto / escritorio fijo */
+.sidebar {
+    background-color: var(--bg-surface);
+    border-right: 1px solid var(--border);
+    width: 260px;
+    position: fixed;
+    height: 100%;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 100;
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+.sidebar-brand {
+    padding: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.5rem;
+}
+
+.nav-item {
+    padding: 0.75rem 1rem;
+    color: var(--text-main);
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.nav-item:hover, .nav-item.active {
+    background-color: var(--primary);
+    color: #fff;
+}
+
+/* Header (flexbox) */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    height: 70px;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* ZONA 2: Contenido dinamico y bento grid */
+.content-area {
+    padding: 1.5rem;
+    flex: 1;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+    color: var(--primary);
+}
+
+/* Estilos de tablas */
+.card-table-container {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    text-align: left;
+}
+
+.data-table th, .data-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    background-color: #38a169;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* Componentes interactivos y accesibilidad (Fase 5)*/
+button, .btn-primary, .btn-secundary, .btn-danger {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-primary { background-color: var(--primary); color: #fff; }
+.btn-primary:hover { background-color: var(--primary-hover); }
+
+.btn-danger { background-color: var(--danger); color: #fff; }
+.btn-danger:hover { background-color: var(--danger-hover); }
+
+.btn-secundary { background-color: transparent; border: 1px solid var(--border); color: var(--text-main); }
+
+/* Estilos para los campos del formulario (incluyendo textareas y selects nuevos) */
+.drawer label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.drawer input[type="text"],
+.drawer input[type="date"],
+.drawer select,
+.drawer textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+}
+
+/* ZONA 3: drawer y modal ocultos por defecto */
+.drawer {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    background-color: var(--bg-surface);
+    box-shadow: -4px 0 15px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+.drawer.open { right: 0; }
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1100;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal {
+    background-color: var(--bg-surface);
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 450px;
+    width: 90%;
+}
+
+/* Media queries progresivas para tablet y escritorio (Fase 2) */
+@media (min-width: 768px) {
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .sidebar {
+        transform: translateX(0);
+    }
+    .main-wrapper {
+        margin-left: 260px;
+    }
+    .bento-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .card-table-container {
+        grid-column: span 3;
+    }
+    #menuToggle {
+        display: none;
+    }
+}

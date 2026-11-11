@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard SPA - Monitoreo Cloud</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-layout">
+        
+        <!-- ZONA 1: Navegacion (Sidebar y Header) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <h2>Pulsar</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active">📊 Dashboard</a>
+                <a href="#servers" class="nav-item">🖥️ Instancias</a>
+                <a href="#metrics" class="nav-item">📈 Metricas</a>
+                <a href="#settings" class="nav-item" id="openDrawerBtn">⚙️ Configuracion</a>
+            </nav>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="header">
+                <button id="menuToggle" class="btn-icon">☰</button>
+                <div class="breadcrumbs">Inicio / <span>Dashboard</span></div>
+                <div class="header-actions">
+                    <button id="themeToggle" class="btn-secundary" aria-label="Cambiar modo oscuro">🌙</button>
+                    <div class="user-profile">Administrador</div>
+                </div>
+            </header>
+
+            <!-- ZONA 2: Contenido dinamico -->
+            <main class="content-area">
+                <section class="bento-grid">
+                    <div class="card card-metric">
+                        <h3>CPU USADA</h3>
+                        <p class="metric-value">78.4%</p>
+                        <span class="status-badge warning">Estable</span>
+                    </div>
+                    <div class="card card-metric">
+                        <h3>MEMORIA RAM</h3>
+                        <p class="metric-value">12.2 GB / 16 GB</p>
+                        <span class="status-badge success">Optimo</span>
+                    </div>
+                    <div class="card card-metric">
+                        <h3>LATENCIA DE RED</h3>
+                        <p class="metric-value">24 ms</p>
+                        <span class="status-badge success">Excelente</span>
+                    </div>
+
+                    <div class="card card-table-container">
+                        <h3>Instancias activas en la nube</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Instancia</th>
+                                    <th>Region</th>
+                                    <th>Estado</th>
+                                    <th>Accion critica</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Practica 1</td>
+                                    <td>MX(Sinaloa)</td>
+                                    <td><span class="dot active"></span> En ejecucion</td>
+                                    <td>
+                                        <button class="btn-danger" id="openModalBtn">Reiniciar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- ZONA 3: drawer de configuracion -->
+    <div class="drawer" id="configDrawer">
+        <div class="drawer-header">
+            <h3>Configuracion de parametros</h3>
+            <button id="closeDrawerBtn" class="btn-icon">✕</button>
+        </div>
+        <div class="drawer-body">
+            <form id="configForm">
+                <label for="serverName">Nombre del grupo:</label>
+                <input type="text" id="serverName" value="Practica" required>
+                
+                <!-- Elementos faltantes solicitados en la Fase 4 -->
+                <label for="serverRegion">Region principal:</label>
+                <select id="serverRegion">
+                    <option value="us-east">MX (Sinaloa)</option>
+                    <option value="sa-east">BR (São Paulo)</option>
+                </select>
+
+                <label for="serverNotes">Notas de mantenimiento:</label>
+                <textarea id="serverNotes" rows="3" placeholder="Escriba detalles de la actualización..."></textarea>
+                <!-- Fin de elementos faltantes -->
+
+                <label for="maintenanceDate">Fecha de mantenimiento:</label>
+                <input type="date" id="maintenanceDate">
+
+                <div class="toggle-control" style="margin: 1rem 0; display: flex; justify-content: space-between; align-items: center;">
+                    <span>Modo silencioso de alertas</span>
+                    <input type="checkbox" id="silentToggle" class="toggle">
+                </div>
+                
+                <button type="submit" class="btn-primary">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ZONA 3: Ventana modal de confirmacion critica -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <h3>Confirmacion de accion critica</h3>
+            <p>¿Estas seguro de reiniciar la instancia de produccion? Esta accion interrumpirs temporalmente el trafico de red</p>
+            <div class="modal-actions" style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: flex-end;">
+                <button id="cancelModalBtn" class="btn-secundary">Cancelar</button>
+                <button id="confirmActionBtn" class="btn-danger">Reiniciar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
